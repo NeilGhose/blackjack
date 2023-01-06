@@ -1,15 +1,14 @@
-# Pool Simulator (WIP)
-Simulates the game of pool using python
+# Blackjack (WIP)
+WIP blackjack simulator that will eventually apply to other card games
 
 ## Installation
 ```
-# git clone https://github.com/NeilGhose/pool.git
-# pip3 install pygame
+# git clone https://github.com/NeilGhose/blackjack.git
 ```
 
 ## Setup
 
 3. Launch Program
 ```
-# python3 pool.py
+# python3 deck.py
 ```
