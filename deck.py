@@ -46,14 +46,16 @@ class Deck:
             d += "\n"+convert(x[0])+" of "+x[1]
         return d
 
-    def print_hand(self, hand):
-        pCard = [self.card_string(card) for card in hand]
+    def print_hand(self, hand, *args):
+        pCard = [self.card_string(card, args) for card in hand]
         for l in range(13):
             for i in pCard:
                 print(i[l],end="")
             print()
+        if args:
+            print(args)
 
-    def card_string(self, card):
+    def card_string(self, card, args):
         con = dict(Hearts = '♥', Clubs = '♣', Spades = '♠', Diamonds = '♦')
         x = [[] for i in range(13)]
         x[0]= "┌───────────────┐"
@@ -132,25 +134,24 @@ class Deck:
 
 
 
-def min_sum(hand):
+def sum(hand):
     sum = 0
+    ace = False
     for x in hand:
-        if x[0]>10:
-            sum += 10
-        else:
-            sum += x[0]
-    return sum
+        val = x[0]
+        ace = ace or (val == 1)
+        if val>10:
+            val = 10
+        sum += val
 
-def max_sum(hand):
-    sum = 0
-    for x in hand:
-        if x[0]>10:
-            sum += 10
-        elif x[0]==1:
-            sum += 11
-        else:
-            sum += x[0]
-    return sum
+    return sum, sum + 10*ace
+
+def eval_hand(hand):
+    shand = sum(hand)
+    if shand[1] > 21:
+        return shand[0]
+    else:
+        return shand[1]
 
 deck = Deck(2)
 deck.shuffle()
@@ -163,31 +164,41 @@ for i in range(2):
 done = False
 
 while True:
+    print("-"*50)
     deck.print_hand([dealer[0], None])
     deck.print_hand(player)
-    if min_sum(player) > 21:
-        print("bust")
+    if sum(player)[0] > 21:
+        print("you bust")
         done = True
         break
             
     x = input("\nHit or Stand: ")
-    if x.lower() is "" or x.lower() is "hit":
+    print("x is :",x)
+    if x == "" or x.lower() == "h":
         deck.draw(player)    
     else:
         break
 
-deck.print_hand(dealer)
-deck.print_hand(player)
-while not done:
+deck.print_hand(dealer, "D:", sum(dealer))
+deck.print_hand(player, "P:", sum(player))
+
+while not done and eval_hand(dealer) < 17:
     time.sleep(2)
-    if min_sum(dealer) < 17:
-        deck.draw(dealer)
-    else:
-        break
+    deck.draw(dealer)
     
-    deck.print_hand(dealer)
-    deck.print_hand(player)
+    deck.print_hand(dealer, "D:", sum(dealer))
+    deck.print_hand(player, "P:", sum(player))
     
-    if min_sum(player) > 21:
+    if sum(dealer)[0] > 21:
         print("Dealer bust")
-        break
+        done = True
+
+if not done:
+    d_hand = eval_hand(dealer)
+    p_hand = eval_hand(player)
+    if p_hand > d_hand:
+        print("You win")
+    elif p_hand == d_hand:
+        print("Draw")
+    else:
+        print("Dealer wins")
