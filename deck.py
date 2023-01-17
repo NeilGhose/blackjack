@@ -1,5 +1,4 @@
 import random as r
-import time
 
 class Deck:
     def __init__(self, hands):
@@ -11,7 +10,7 @@ class Deck:
         suits = ['Hearts', 'Clubs', 'Spades', 'Diamonds']
         for i in suits:
             for u in range(13):
-                deck.append([u+1,i])
+                deck.append({'val':u+1, 'suit':i})
         return deck
 
     def defineHands(self, num_hands):
@@ -43,7 +42,7 @@ class Deck:
     def print_deck(self, hand):
         d = ""
         for x in hand:
-            d += "\n"+convert(x[0])+" of "+x[1]
+            d += "\n"+self.convert(x['val'])+" of "+x['suit']
         return d
 
     def print_hand(self, hand, *args):
@@ -62,69 +61,69 @@ class Deck:
         x[12]= "└───────────────┘"
 
         if card:
-            if card[0] == 1:
+            if card['val'] == 1:
                 x[1] = "│A              │"
                 x[11] = "│              A│"
-            elif card[0] == 10:
+            elif card['val'] == 10:
                 x[1] = "│10             │"
                 x[11] = "│             10│"
-            elif card[0] == 11:
+            elif card['val'] == 11:
                 x[1] = "│J              │"
-                x[2] = f"│{con[card[1]]}      ███▄    │"
+                x[2] = f"│{con[card['suit']]}      ███▄    │"
                 x[3] = "│      ▀████    │"
                 x[9] = "│    ████▄      │"
-                x[10] = f"│    ▀███      {con[card[1]]}│"
+                x[10] = f"│    ▀███      {con[card['suit']]}│"
                 x[11] = "│              J│"
-            elif card[0] == 12:
+            elif card['val'] == 12:
                 x[1] = "│Q              │"
-                x[2] = f"│{con[card[1]]}      ▄███    │"
+                x[2] = f"│{con[card['suit']]}      ▄███    │"
                 x[3] = "│       ████    │"
                 x[9] = "│    ████       │"
-                x[10] = f"│    ███▀      {con[card[1]]}│"
+                x[10] = f"│    ███▀      {con[card['suit']]}│"
                 x[11] = "│              Q│"
-            elif card[0] == 13:
+            elif card['val'] == 13:
                 x[1] = "│K              │"
-                x[2] = f"│{con[card[1]]}     ▐▄██▄▌   │"
+                x[2] = f"│{con[card['suit']]}     ▐▄██▄▌   │"
                 x[3] = "│       ████    │"
                 x[9] = "│    ████       │"
-                x[10] = f"│   ▐▀██▀▌     {con[card[1]]}│"
+                x[10] = f"│   ▐▀██▀▌     {con[card['suit']]}│"
                 x[11] = "│              K│"
             else:
-                x[1] = f"│{card[0]}              │"
-                x[11] = f"│              {card[0]}│"
-            if card[0] > 10:
+                x[1] = f"│{card['val']}              │"
+                x[11] = f"│              {card['val']}│"
+            if card['val'] > 10:
                 x[4] = "│    ▄▄█████▄   │"
                 x[5] = "│   █████████   │"
                 x[6] = "│  ▐█████████▌  │"
                 x[7] = "│   █████████   │"
                 x[8] = "│   ▀█████▀▀    │"
 
-            if card[0]<11:
-                x[2] = f"│{con[card[1]]}              │"
-                x[10] = f"│              {con[card[1]]}│"
+            if card['val']<11:
+                x[2] = f"│{con[card['suit']]}              │"
+                x[10] = f"│              {con[card['suit']]}│"
 
-                if card[0] > 7:
-                    x[3] = f"│    {con[card[1]]}     {con[card[1]]}    │"
-                    x[5] = f"│    {con[card[1]]}     {con[card[1]]}    │"
-                    x[7] = f"│    {con[card[1]]}     {con[card[1]]}    │"
-                    x[9] = f"│    {con[card[1]]}     {con[card[1]]}    │"
+                if card['val'] > 7:
+                    x[3] = f"│    {con[card['suit']]}     {con[card['suit']]}    │"
+                    x[5] = f"│    {con[card['suit']]}     {con[card['suit']]}    │"
+                    x[7] = f"│    {con[card['suit']]}     {con[card['suit']]}    │"
+                    x[9] = f"│    {con[card['suit']]}     {con[card['suit']]}    │"
 
-                if card[0] == 10 or card[0] == 2 or card[0] == 3:
-                    x[4] = f"│       {con[card[1]]}       │"
-                    x[8] = f"│       {con[card[1]]}       │"
+                if card['val'] == 10 or card['val'] == 2 or card['val'] == 3:
+                    x[4] = f"│       {con[card['suit']]}       │"
+                    x[8] = f"│       {con[card['suit']]}       │"
 
-                if card[0] == 9 or card[0] == 5 or card[0] == 1 or card[0] == 3:
-                    x[6] = f"│       {con[card[1]]}       │"
+                if card['val'] == 9 or card['val'] == 5 or card['val'] == 1 or card['val'] == 3:
+                    x[6] = f"│       {con[card['suit']]}       │"
                             
-                if card[0] >= 4 and card[0] <= 7:
-                    x[4] = f"│    {con[card[1]]}     {con[card[1]]}    │"
-                    x[8] = f"│    {con[card[1]]}     {con[card[1]]}    │"
+                if card['val'] >= 4 and card['val'] <= 7:
+                    x[4] = f"│    {con[card['suit']]}     {con[card['suit']]}    │"
+                    x[8] = f"│    {con[card['suit']]}     {con[card['suit']]}    │"
                     
-                if card[0] == 6 or card[0] == 7:
-                    x[6] = f"│    {con[card[1]]}     {con[card[1]]}    │"
+                if card['val'] == 6 or card['val'] == 7:
+                    x[6] = f"│    {con[card['suit']]}     {con[card['suit']]}    │"
 
-                if card[0] == 7:
-                    x[5] = f"│       {con[card[1]]}       │"
+                if card['val'] == 7:
+                    x[5] = f"│       {con[card['suit']]}       │"
 
         for c in range(13):
             if not x[c]:
@@ -134,71 +133,3 @@ class Deck:
 
 
 
-def sum(hand):
-    sum = 0
-    ace = False
-    for x in hand:
-        val = x[0]
-        ace = ace or (val == 1)
-        if val>10:
-            val = 10
-        sum += val
-
-    return sum, sum + 10*ace
-
-def eval_hand(hand):
-    shand = sum(hand)
-    if shand[1] > 21:
-        return shand[0]
-    else:
-        return shand[1]
-
-deck = Deck(2)
-deck.shuffle()
-player = deck.hands[0]
-dealer = deck.hands[1]
-for i in range(2):
-    deck.draw(player)
-    deck.draw(dealer)
-
-done = False
-
-while True:
-    print("-"*50)
-    deck.print_hand([dealer[0], None])
-    deck.print_hand(player)
-    if sum(player)[0] > 21:
-        print("you bust")
-        done = True
-        break
-            
-    x = input("\nHit or Stand: ")
-    print("x is :",x)
-    if x == "" or x.lower() == "h":
-        deck.draw(player)    
-    else:
-        break
-
-deck.print_hand(dealer, "D:", sum(dealer))
-deck.print_hand(player, "P:", sum(player))
-
-while not done and eval_hand(dealer) < 17:
-    time.sleep(2)
-    deck.draw(dealer)
-    
-    deck.print_hand(dealer, "D:", sum(dealer))
-    deck.print_hand(player, "P:", sum(player))
-    
-    if sum(dealer)[0] > 21:
-        print("Dealer bust")
-        done = True
-
-if not done:
-    d_hand = eval_hand(dealer)
-    p_hand = eval_hand(player)
-    if p_hand > d_hand:
-        print("You win")
-    elif p_hand == d_hand:
-        print("Draw")
-    else:
-        print("Dealer wins")
