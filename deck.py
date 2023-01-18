@@ -24,6 +24,10 @@ class Deck:
 
     def draw(self, hand):
         hand.append(self.deck.pop())
+    
+    def draw_n(self, hand, n):
+        for i in range(n):
+            self.draw(hand)
 
     def convert(self, n):
         if n is 1:
